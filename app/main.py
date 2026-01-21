@@ -2,8 +2,12 @@ from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
 from app.database import Base, engine
-
 from app.routes.urls import router as urls_router
+import sys
+from pathlib import Path
+
+# Asegura que Python vea la raíz del proyecto
+sys.path.insert(0, str(Path(__file__).resolve().parent.parent))
 
 app = FastAPI(
     title="IG URL Collector API",
