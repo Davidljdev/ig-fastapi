@@ -1,8 +1,9 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
+from .database import Base, engine
 
-from app.routes.urls import router as urls_router
+from .routes.urls import router as urls_router
 
 app = FastAPI(
     title="IG URL Collector API",
@@ -14,6 +15,10 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 # Templates
 templates = Jinja2Templates(directory="templates")
+
+@app.on_event("startup")
+def on_startup():
+    Base.metadata.create_all(bind=engine)
 
 # Home page
 @app.get("/")
