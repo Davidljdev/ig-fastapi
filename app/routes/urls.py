@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Query
 from datetime import datetime, date
-from src.db.database import get_connection
-from src.schemas import UrlCreate
+from app.db.database import get_connection
+from app.schemas import UrlCreate
 import re
 
 #router = APIRouter(prefix="/urls", tags=["URLs"])
