@@ -1,24 +1,43 @@
+# Instagram URL Manager – FastAPI
 
-# crear entorno virtual para python 3.11 (compatible total)
+This small project provides both a **REST API** and an **HTML website** to manage Instagram URLs.
+It allows users to **add, retrieve, and delete Instagram URLs** stored in a **SQLite database**, using **FastAPI** as the backend framework.
+
+## Project Description (Short)
+
+This project provides an API service and an HTML website to consume services related to adding, retrieving, and deleting Instagram URLs stored in a SQLite database.
+
+## Python Virtual Environment (Python 3.11 – Fully Compatible)
+
+### Create virtual environment
 /opt/homebrew/bin/python3.11 -m venv venv
 
-## si lo creaste mal y quieres eliminarlo
-deactivate
+### (If you created it incorrectly and want to remove it)
+deactivate  
 rm -rf venv
 
-# activar entorno
+### Activate virtual environment
 source venv/bin/activate
-# instalar librerias en entorno
+
+## Install Dependencies
+
+Install all required libraries inside the virtual environment:
 pip install -r requirements.txt
-# ver que librerias se instalaron bien
+
+Verify installed packages:
 pip list
-# ejecutar servicio
+
+## Run the Application (Local Development)
+
+Start the FastAPI server using Uvicorn:
 uvicorn app.main:app --reload
 
+API base URL: http://127.0.0.1:8000  
+Swagger UI: http://127.0.0.1:8000/docs  
+ReDoc: http://127.0.0.1:8000/redoc  
 
+## Project Structure
 
-
-# estructura del proyecto fastapi
 ig-fastapi/
 │
 ├── app/
@@ -28,14 +47,12 @@ ig-fastapi/
 │   ├── routes/
 │   │   └── urls.py
 │
-├── templates/        ← HTML (la web)
+├── templates/
 │   └── index.html
 │
-├── static/           ← CSS / JS
+├── static/
 │   ├── css/
 │   └── js/
 │
 ├── requirements.txt
 └── urls.db
-
-
