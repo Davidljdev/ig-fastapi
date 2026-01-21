@@ -1,7 +1,7 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from app.database import Base, engine
+from app.db import Base, engine
 from app.routes.urls import router as urls_router
 import sys
 from pathlib import Path
