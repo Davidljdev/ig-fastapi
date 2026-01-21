@@ -1,0 +1,48 @@
+body {
+  background: #f5f5f5;
+}
+
+.card {
+  margin-top: 30px;
+}
+
+.result {
+  margin-top: 15px;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.result.success {
+  background-color: #e8f5e9;
+  color: #2e7d32;
+}
+
+.result.error {
+  background-color: #ffebee;
+  color: #c62828;
+}
+
+.truncate {
+  max-width: 250px;
+}
+
+.nav-wrapper {
+    position: relative; /* asegura que el contenedor sea la referencia */
+    white-space: normal; /* permite que el texto haga wrap */
+}
+
+
+.nav-wrapper .brand-logo {
+    position: relative !important; /* quita el absolute predeterminado */
+    display: block;                /* permite que ocupe todo el ancho */
+    width: 100%;                   /* ajusta al contenedor */
+    text-align: center;            /* mantiene centrado el texto */
+    padding: 0 1rem;               /* opcional: un poco de espacio lateral */
+    font-size: 2rem;               /* opcional: reduce tamaño en móviles */
+}
+
+@media (max-width: 600px) {
+    .brand-logo {
+        font-size: 1rem !important;  /* ajusta el tamaño del texto en móviles */
+    }
+}

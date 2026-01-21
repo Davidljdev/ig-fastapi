@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <title>IG URL Manager</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- Materialize CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <link rel="stylesheet" href="/static/css/styles.css">
+</head>
+
+<body>
+    <nav>
+        <div class="nav-wrapper teal">
+            <a href="#" class="brand-logo center">Instagram URL Manager by @dajanluvid</a>
+        </div>
+    </nav>
+
+    <div class="container">
+
+        <!-- ADD URL -->
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Add Instagram URL</span>
+
+                <div class="input-field">
+                    <input id="urlInput" type="text">
+                    <label for="urlInput">Instagram URL</label>
+                </div>
+
+                <button class="btn teal" onclick="addUrl()">Add</button>
+                <div id="addResult" class="result"></div>
+            </div>
+        </div>
+
+        <!-- GET URLS -->
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">View URLs</span>
+
+                <p>
+                    <label>
+                        <input type="checkbox" id="onlyActive" checked />
+                        <span>Only active</span>
+                    </label>
+                </p>
+
+                <div class="input-field">
+                    <input id="idFilter" type="number">
+                    <label for="idFilter">Specific ID (optional)</label>
+                </div>
+
+                <button id="fetchUrlsBtn" style="margin-bottom:1rem;" class="btn blue" onclick="getUrls()">Find</button>
+
+                <p id="noDataMessage" style="color:red; display:none;">No records were found.</p>
+
+                <div id="tableContainer" style="display:none; max-height:300px; overflow-y:auto;">
+                    <table class="striped responsive-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>URL</th>
+                                <th>Created</th>
+                                <th>Deleted</th>
+                            </tr>
+                        </thead>
+                        <tbody id="urlsTable"></tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- DELETE -->
+        <div class="card">
+            <div class="card-content">
+                <span class="card-title">Delete URLs</span>
+
+                <div class="input-field">
+                    <input type="date" id="deleteDate">
+                    <label for="deleteDate" class="active">Deletion date</label>
+                </div>
+
+                <div class="input-field">
+                    <input type="number" id="deleteId">
+                    <label for="deleteId">Specific ID (optional)</label>
+                </div>
+
+                <button class="btn red" onclick="deleteUrls()">Delete</button>
+                <div id="deleteResult" class="result"></div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Materialize JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="/static/js/app.js"></script>
+</body>
+
+</html>
