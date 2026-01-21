@@ -1,9 +1,9 @@
 from fastapi import FastAPI, Request
 from fastapi.templating import Jinja2Templates
 from fastapi.staticfiles import StaticFiles
-from .database import Base, engine
+from app.database import Base, engine
 
-from .routes.urls import router as urls_router
+from app.routes.urls import router as urls_router
 
 app = FastAPI(
     title="IG URL Collector API",
