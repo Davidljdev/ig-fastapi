@@ -38,6 +38,9 @@ ReDoc: http://127.0.0.1:8000/redoc
 
 ## Project Structure
 
+## Project Structure
+
+```text
 ig-fastapi/
 │
 ├── app/
@@ -56,3 +59,4 @@ ig-fastapi/
 │
 ├── requirements.txt
 └── urls.db
+```
