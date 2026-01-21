@@ -10,6 +10,9 @@ window.addEventListener("DOMContentLoaded", () => {
     document.getElementById("deleteDate").value = todayStr;
 });
 
+// -------------------
+// PUT
+// -------------------
 async function addUrl() {
     const url = document.getElementById("urlInput").value;
     const result = document.getElementById("addResult");
@@ -23,7 +26,7 @@ async function addUrl() {
     });
 
     const data = await res.json();
-    console.log(data);
+    //console.log(data);
 
     if (res.ok) {
         result.className = "result success";
@@ -31,10 +34,19 @@ async function addUrl() {
         document.getElementById("urlInput").value = "";
     } else {
         result.className = "result error";
-        result.innerText = data.detail.message;
+        if (res.status == 422) {
+            result.innerText = data.detail[0].msg
+        }
+        else {
+            result.innerText = data.detail.message;
+        }
+
     }
 }
 
+// -------------------
+// GET
+// -------------------
 async function getUrls() {
     const includeDeleted = !document.getElementById("onlyActive").checked;
     const urlId = document.getElementById("idFilter").value;
@@ -46,65 +58,63 @@ async function getUrls() {
     tableContainer.style.display = "none";
     noDataMessage.style.display = "none";
 
-    //console.log("tableContainer:", tableContainer);
-    //console.log("table:", table);
-    //console.log("noDataMessage:", noDataMessage);
-
     let query = `?include_deleted=${includeDeleted}`;
     if (urlId) query += `&url_id=${urlId}`;
 
     try {
         const res = await fetch(`/urls${query}`);
         const data = await res.json();
+        console.log("Datos recibidos:", data);
 
-        if (!data || data.length === 0) {
+        // Asegurarse de que data sea un array
+        const urls = Array.isArray(data) ? data : [];
+
+        if (!urls.length) {
             noDataMessage.style.display = "block";
             return;
         }
 
-        data.forEach(row => {
-            // Extraer solo el código final de la URL
-            //const urlParts = row.url.split('/');
-            //const code = urlParts.filter(part => part.trim()).pop();
+        urls.forEach(row => {
+            // Extraer solo el código final de la URL de Instagram
             let displayUrl = row.url;
-            const reelIndex = row.url.indexOf("/www.instagram.com/");
+            const reelIndex = row.url.indexOf("www.instagram.com/");
             if (reelIndex !== -1) {
-                displayUrl = row.url.slice(reelIndex + "/www.instagram.com/".length);
+                displayUrl = row.url.slice(reelIndex + "www.instagram.com/".length);
             }
 
             // Formatear fechas seguro sin microsegundos
             function formatDate(dateStr) {
                 if (!dateStr) return "-";
-                // quitar microsegundos si existen
-                const [datePart, timePart] = dateStr.split(' ');
-                const timeShort = timePart.split('.')[0]; // elimina .764624
+                const [datePart, timePart] = dateStr.split('T'); // ISO8601
+                const timeShort = timePart ? timePart.split('.')[0] : "";
                 return `${datePart} ${timeShort}`;
             }
 
             const created = formatDate(row.created_at);
             const deleted = formatDate(row.deleted_at);
 
-            //console.log(row.id, row.url, row.created_at, row.deleted_at); // <-- solo para debug
-
             table.innerHTML += `
-        <tr>
-          <td>${row.id}</td>
-          <td>${displayUrl}</td>
-          <td>${created}</td>
-          <td>${deleted}</td>
-        </tr>
-      `;
+                <tr>
+                  <td>${row.id}</td>
+                  <td>${displayUrl}</td>
+                  <td>${created}</td>
+                  <td>${deleted}</td>
+                </tr>
+            `;
         });
 
         tableContainer.style.display = "block";
 
     } catch (error) {
-        //console.error("Error al obtener datos:", error);
-        noDataMessage.textContent = "Ocurrió un error al consultar la API.";
+        noDataMessage.textContent = "An error occurred while querying the API.";
         noDataMessage.style.display = "block";
+        console.error("Error al obtener datos:", error);
     }
 }
 
+// -------------------
+// DEL
+// -------------------
 async function deleteUrls() {
     const date = document.getElementById("deleteDate").value;
     const id = document.getElementById("deleteId").value;

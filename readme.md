@@ -10,28 +10,39 @@ This project provides an API service and an HTML website to consume services rel
 ## Python Virtual Environment (Python 3.11 – Fully Compatible)
 
 ### Create virtual environment
+```text
 /opt/homebrew/bin/python3.11 -m venv venv
+```
 
 ### (If you created it incorrectly and want to remove it)
+```text
 deactivate  
 rm -rf venv
+```
 
 ### Activate virtual environment
+```text
 source venv/bin/activate
+```
 
 ## Install Dependencies
 
 Install all required libraries inside the virtual environment:
+```text
 pip install -r requirements.txt
+```
 
-Verify installed packages:
+### Verify installed packages:
+```text
 pip list
+```
 
 ## Run the Application (Local Development)
 
 Start the FastAPI server using Uvicorn:
+```text
 uvicorn app.main:app --reload
-
+```
 API base URL: http://127.0.0.1:8000  
 Swagger UI: http://127.0.0.1:8000/docs  
 ReDoc: http://127.0.0.1:8000/redoc  

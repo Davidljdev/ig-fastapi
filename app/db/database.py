@@ -1,25 +1,13 @@
-import sqlite3
-from pathlib import Path
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import sessionmaker
+import os
+from dotenv import load_dotenv
 
-DB_PATH = Path("ig-urls.db")
+load_dotenv()
 
-def get_connection():
-    conn = sqlite3.connect(DB_PATH)
-    conn.row_factory = sqlite3.Row
-    return conn
+DATABASE_URL = os.getenv("DATABASE_URL")
 
-def init_db():
-    conn = get_connection()
-    cursor = conn.cursor()
-
-    cursor.execute("""
-        CREATE TABLE IF NOT EXISTS urls (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            url TEXT NOT NULL,
-            created_at DATETIME NOT NULL,
-            deleted_at DATETIME
-        )
-    """)
-
-    conn.commit()
-    conn.close()
+engine = create_engine(DATABASE_URL)
+SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
+Base = declarative_base()
